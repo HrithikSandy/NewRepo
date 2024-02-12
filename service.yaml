@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-app
+spec:
+  selector:
+    app: dotnet-app
+  ports:
+    - protocol: TCP
+      port: 80  # Port on which your application is exposed
+      targetPort: 80  # Port your application listens on inside the container
+  type: LoadBalancer  # Exposes the service externally using an Azure Load Balancer
