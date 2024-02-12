@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+spec:
+  replicas: 3  # Number of replicas you want to run
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: example-container
+        image: your-image:tag  # Image for your container
+        resources:
+          limits:
+            cpu: "0.5"       # Maximum CPU usage allowed for this container
+            memory: "512Mi"  # Maximum memory usage allowed for this container
+          requests:
+            cpu: "0.2"       # Minimum CPU required for this container
+            memory: "256Mi"  # Minimum memory required for this container
+        ports:
+        - containerPort: 8080  # Port your application listens on
+        livenessProbe:
+          httpGet:
+            path: /health   # Path to check for the health of your application
+            port: 8080      # Port to access the health check endpoint
+          initialDelaySeconds: 30  # Number of seconds after the container has started before probes are initiated
+          periodSeconds: 10        # How often (in seconds) to perform the probe
